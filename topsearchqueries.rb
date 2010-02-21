@@ -7,7 +7,7 @@ arg = ARGV
 arg.delete("")
 $LOAD_PATH.delete(".")
 dir = File.dirname(File.expand_path($PROGRAM_NAME))
-readf = File.join(dir, 'README.txt')
+readf = File.join(dir, 'README')
 if arg[0] =~ /\-h|\-\-help/
   exit unless File.exist?(readf)
   print IO.read(readf); exit

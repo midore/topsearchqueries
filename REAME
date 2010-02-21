@@ -1,6 +1,6 @@
 
 First option must be a '-f' file.csv path
- -f <filename> example, ~/TopQueriesxxxx.csv
+ -f <filename> example, ~/TopQueriesxxxx.csv that is downloaded from Google WebMastertool
  -t <search term> days or week or monthNN ( NN is month number , December is 12)
  -s <search type> from 1 to 4. default value is 2
  -d <search domain> 'all' or 'google'

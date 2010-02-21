@@ -34,6 +34,7 @@ class TopSearchQueries
   end
 
   def base
+    return nil unless @file
     return nil unless File.exist?(@file)
     IO.foreach(@file){|line|
       next if /^,場所/.match(line)

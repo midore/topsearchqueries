@@ -31,6 +31,7 @@ class TopSearchQueries
     (h['n'].nil?) ? @num = 10 : @num = h['n'].to_i
     @title = ""
     @words = Hash.new(0)
+    @words2 = Hash.new(0)
   end
 
   def base
@@ -39,13 +40,14 @@ class TopSearchQueries
     IO.foreach(@file){|line|
       next if /^,場所/.match(line)
       x = line.split(",\"")
-      area_str, words_str = x[0], x[1]
+      area_str, words_str, qw_str = x[0], x[1], x[2]
       term, domain, search = area_str.split(",")
       next unless term == @term
       next unless search == @search
       next unless domain.include?(@domain)
       @title << "#{term}, #{domain}, #{search}\n"
       get_words(words_str)
+      get_q(qw_str)
     }
     return output unless @words.empty?
     print "Nothing.\n\n"
@@ -53,11 +55,18 @@ class TopSearchQueries
 
   def get_words(str)
     str.split(/\]/).each{|x|
-      next if x.empty?
-      ary = x.split(",")
-      word, n = ary.first, ary.last
-      next unless word =~ /\[/
-      @words[word.gsub(/\[/,'').strip] += n.strip.to_i
+      ary = x.strip.gsub(/\[/, '').split(",")
+      next if ary.size < 2
+      @words[ary.first] += ary.last.strip.to_i
+    }
+  end
+
+  def get_q(str)
+    return nil unless str
+    str.split(/\]/).each{|x|
+      ary = x.strip.gsub(/\[/, '').split(",")
+      next if ary.size < 2
+      @words2["*\s"+ary.first] += ary.last.strip.to_i
     }
   end
 
@@ -75,6 +84,7 @@ class TopSearchQueries
 
   def output
     print hyphen, @title, hyphen
+    @words2.each{|k,v| to_s([0, k, v].flatten)} 
     h = @words.sort_by{|k,v| v}.reverse[0..@num-1]
     h.each_with_index{|x,n| to_s([n+1, x].flatten)}
     output_sum(h)

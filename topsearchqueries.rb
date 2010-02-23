@@ -1,7 +1,6 @@
 #!/usr/bin/local/ruby19
 # coding: utf-8
-# topsearchqueries.rb
-# 2010-02-20
+# 2010-02-24
 
 exit unless Encoding.default_external.name == 'UTF-8'
 arg = ARGV
@@ -22,11 +21,11 @@ class TopSearchQueries
     arg.each{|x| (m = /^-(.*)/.match(x); next) if /^-/.match(x); h[m[1]] = x if m}
     x = /month(.*)/.match(h['t'])
     (xi = x[1].to_i; h['t'] = 'month') if x
-    a_term = {'days'=>"過去7日分", 'week'=>"2 週間前", 'month'=>"#{xi}月", 'all'=>'all'}
+    a_term = {'week'=>"過去7日分", 'week2'=>"2 週間前", 'week3'=>"3 週間前", 'month'=>"#{xi}月", 'all'=>'all'}
     a_domain = {'all'=>"すべての Google ドメイン", 'google'=>'google'}
     a_search = {'1'=>"すべての検索", '2'=>"ウェブ検索", '3'=>"携帯端末", '4'=>"ブログ検索"}
     @file, @title = h['f'], ""
-    @term = a_term[h['t']] ||= a_term['days']
+    @term = a_term[h['t']] ||= a_term['week']
     @domain = a_domain[h['d']] ||= a_domain['all']
     @search = a_search[h['s']] ||= a_search['1']
     (h['n'].nil?) ? @num = 10 : @num = h['n'].to_i

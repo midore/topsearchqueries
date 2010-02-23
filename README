@@ -1,14 +1,14 @@
 
 First option must be a '-f' file.csv path
  -f <filename> example, ~/TopQueriesxxxx.csv that is downloaded from Google WebMastertool
- -t <search term> days or week or monthNN ( NN is month number , December is 12)
+ -t <search term> week or week2 or week3 or monthNN ( NN is month number , December is 12)
  -s <search type> from 1 to 4. default value is 2
  -d <search domain> 'all' or 'google'
  -n <count line> default value is 10
  -h this help
 
  Default values of all options
-  -t days -s 1 -d all -n 10
+  -t week -s 1 -d all -n 10
 
  Example;
  ./topsearch.rb -f ~/TopQueriesxxxx.csv -t week -s 2 -d google -n 3
